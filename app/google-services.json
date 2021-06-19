@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "378146143328",
+    "project_id": "guessrelative",
+    "storage_bucket": "guessrelative.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:378146143328:android:8ea677e0e3ca3836b85705",
+        "android_client_info": {
+          "package_name": "com.example.androidproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "378146143328-0dfjfbg5s0fkvpdvu007pm6ieu9ivlo8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkONlCIlQmpgVH0sBm7v22iwl9U5gycv8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "378146143328-0dfjfbg5s0fkvpdvu007pm6ieu9ivlo8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
