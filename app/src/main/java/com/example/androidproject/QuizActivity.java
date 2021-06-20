@@ -1,104 +1,176 @@
 package com.example.androidproject;
 
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+
+import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class QuizActivity extends AppCompatActivity {
     private TextView tvQuestion,tvScore,tvQuestionNo,tvTimer;
-    private RadioGroup radioGroup;
-    private RadioButton rb1,rb2,rb3,rb4;
-    private Button btnNext;
-
+    private Button btnNext, btn1, btn2, btn3, btn4;
+    private ImageView imageView;
+    private FirebaseStorage storage;
+    private StorageReference storageReference;
+    private ImageLoader imageLoader;
+    private ArrayList<Relative> relatives;
     int totalQuestions;
     int qCounter = 0;
     int score = 0;
-    ColorStateList dfRbColor;
-    boolean answered;
+    boolean answered = false;
     CountDownTimer countDownTimer;
-
-
     private QuestionModel currentQuestion;
-private List<QuestionModel> questionsList;
+    private ArrayList<QuestionModel> questionsList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
-        questionsList = new ArrayList<>();
+        questionsList = getIntent().getParcelableArrayListExtra("question_list");
+        relatives = new ArrayList<>();
         tvQuestion = findViewById(R.id.textQuestion);
+        imageView = findViewById(R.id.imageView);
         tvScore = findViewById(R.id.textScore);
         tvQuestionNo = findViewById(R.id.textQuestionNo);
         tvTimer = findViewById(R.id.textTimer);
 
-        radioGroup = findViewById(R.id.radioGroup);
-        rb1 = findViewById(R.id.rb1);
-        rb2 = findViewById(R.id.rb2);
-        rb3 = findViewById(R.id.rb3);
-        rb4 = findViewById(R.id.rb4);
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
+        imageLoader = ImageLoader.getInstance();
+        imageLoader.init(ImageLoaderConfiguration.createDefault(QuizActivity.this));
+
+        btn1 = findViewById(R.id.btn1);
+        btn2 = findViewById(R.id.btn2);
+        btn3 = findViewById(R.id.btn3);
+        btn4 = findViewById(R.id.btn4);
         btnNext = findViewById(R.id.btnNext);
 
-        dfRbColor = rb1.getTextColors();
-
-
-        addQuestions();
+        //addQuestions();
         totalQuestions = questionsList.size();
-        showNextQuestion();
+        if(totalQuestions == 5){
+            showNextQuestion();
+        }
+
 
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(answered==false){
-                    if(rb1.isChecked() || rb2.isChecked() || rb3.isChecked() || rb4.isChecked()){
-                        checkAnswer();
-                        countDownTimer.cancel();
-                    }
-                 else{
                     Toast.makeText(QuizActivity.this,"Please Select an option", Toast.LENGTH_SHORT).show();
-                }
-                } else{
+                } else {
                     showNextQuestion();
+                }
+            }
+        });
+
+        btn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(answered==false){
+                    checkAnswer(1);
+                    countDownTimer.cancel();
+                } else {
+                    Toast.makeText(QuizActivity.this,"Please click to next question.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(answered==false){
+                    checkAnswer(2);
+                    countDownTimer.cancel();
+                } else {
+                    Toast.makeText(QuizActivity.this,"Please click to next question.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        btn3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(answered==false){
+                    checkAnswer(3);
+                    countDownTimer.cancel();
+                } else {
+                    Toast.makeText(QuizActivity.this,"Please click to next question.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        btn4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(answered==false){
+                    checkAnswer(4);
+                    countDownTimer.cancel();
+                } else {
+                    Toast.makeText(QuizActivity.this,"Please click to next question.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
-    private void checkAnswer() {
+    private void checkAnswer(int answerNo) {
         answered = true;
-        RadioButton rbSelected = findViewById(radioGroup.getCheckedRadioButtonId());
-        int answerNo = radioGroup.indexOfChild(rbSelected) +1;
         if(answerNo == currentQuestion.getCorrectAnsNo()){
             score++;
             tvScore.setText("Score: " + score);
 
         }
-        rb1.setTextColor(Color.RED);
-        rb2.setTextColor(Color.RED);
-        rb3.setTextColor(Color.RED);
-        rb4.setTextColor(Color.RED);
+        btn1.setBackgroundColor(Color.RED);
+        btn2.setBackgroundColor(Color.RED);
+        btn3.setBackgroundColor(Color.RED);
+        btn4.setBackgroundColor(Color.RED);
         switch(currentQuestion.getCorrectAnsNo()){
             case 1:
-                rb1.setTextColor(Color.GREEN);
+                btn1.setBackgroundColor(Color.GREEN);
+                btn1.setTextColor(Color.BLACK);
                 break;
             case 2:
-                rb2.setTextColor(Color.GREEN);
+                btn2.setBackgroundColor(Color.GREEN);
+                btn2.setTextColor(Color.BLACK);
                 break;
             case 3:
-                rb3.setTextColor(Color.GREEN);
+                btn3.setBackgroundColor(Color.GREEN);
+                btn3.setTextColor(Color.BLACK);
                 break;
             case 4:
-                rb4.setTextColor(Color.GREEN);
+                btn4.setBackgroundColor(Color.GREEN);
+                btn4.setTextColor(Color.BLACK);
                 break;
 
         }
@@ -107,25 +179,34 @@ private List<QuestionModel> questionsList;
         } else{
             btnNext.setText("Finish");
         }
-
-
     }
 
     private void showNextQuestion() {
-        radioGroup.clearCheck();
-        rb1.setTextColor(dfRbColor);
-        rb2.setTextColor(dfRbColor);
-        rb3.setTextColor(dfRbColor);
-        rb4.setTextColor(dfRbColor);
+        btn1.setBackgroundColor(Color.parseColor("#673AB7"));
+        btn2.setBackgroundColor(Color.parseColor("#673AB7"));
+        btn3.setBackgroundColor(Color.parseColor("#673AB7"));
+        btn4.setBackgroundColor(Color.parseColor("#673AB7"));
+        btn1.setTextColor(Color.WHITE);
+        btn2.setTextColor(Color.WHITE);
+        btn3.setTextColor(Color.WHITE);
+        btn4.setTextColor(Color.WHITE);
 
         if(qCounter < totalQuestions){
             timer();
             currentQuestion = questionsList.get(qCounter);
             tvQuestion.setText(currentQuestion.getQuestion());
-            rb1.setText(currentQuestion.getOption1());
-            rb2.setText(currentQuestion.getOption2());
-            rb3.setText(currentQuestion.getOption3());
-            rb4.setText(currentQuestion.getOption4());
+            StorageReference imgRef = storageReference.child(currentQuestion.getCorrectImage());
+            imgRef.getBytes(1024*1024).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                @Override
+                public void onSuccess(byte[] bytes) {
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    imageView.setImageBitmap(bitmap);
+                }
+            });
+            btn1.setText(currentQuestion.getOption1());
+            btn2.setText(currentQuestion.getOption2());
+            btn3.setText(currentQuestion.getOption3());
+            btn4.setText(currentQuestion.getOption4());
             qCounter++;
 
             btnNext.setText("Submit");
@@ -133,6 +214,7 @@ private List<QuestionModel> questionsList;
             answered = false;
 
         }else{
+            questionsList.clear();
             finish();
         }
     }
@@ -149,14 +231,5 @@ private List<QuestionModel> questionsList;
                 showNextQuestion();
             }
         }.start();
-    }
-
-    private void addQuestions(){
-        questionsList.add(new QuestionModel("FIND THE RELATIVE","A","B","C","D",1));
-        questionsList.add(new QuestionModel("FIND THE RELATIVE","A","B","C","D",2));
-        questionsList.add(new QuestionModel("FIND THE RELATIVE","A","B","C","D",3));
-        questionsList.add(new QuestionModel("FIND THE RELATIVE","A","B","C","D",4));
-        questionsList.add(new QuestionModel("FIND THE RELATIVE","A","B","C","D",1));
-
     }
 }

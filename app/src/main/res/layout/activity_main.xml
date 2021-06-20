@@ -9,61 +9,99 @@
     <RelativeLayout
         android:layout_width="409dp"
         android:layout_height="729dp"
+        android:padding="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:padding ="30dp">
+        app:layout_constraintTop_toTopOf="parent">
+
         <ImageView
             android:id="@+id/appPhoto"
-            android:layout_width="fill_parent"
+            android:layout_width="269dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="55dp"
+            android:layout_marginLeft="55dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginEnd="55dp"
+            android:layout_marginRight="55dp"
             android:src="@drawable/rphoto"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/appName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text = "Guess Your Relative"
-            android:textSize="30sp"
-            android:textColor="@color/black"
-            android:textStyle="italic|bold"
+            android:layout_below="@+id/appPhoto"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="280dp"/>
+            android:layout_marginTop="17dp"
+            android:text="Guess Your Relative"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            android:textStyle="italic|bold" />
+
         <Button
             android:id="@+id/btnPlay"
-            android:layout_width="wrap_content"
+            android:layout_width="111dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="350dp"
-            android:layout_marginLeft="50dp"
+            android:layout_below="@+id/appName"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="55dp"
+            android:layout_marginLeft="55dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="175dp"
+            android:layout_marginRight="175dp"
+            android:backgroundTint="@color/green"
             android:text="PLAY!"
             android:textSize="20sp"
-            android:textStyle="italic"
-            android:backgroundTint="@color/green"/>
+            android:textStyle="italic" />
+
         <Button
             android:id="@+id/btnUpload"
-            android:layout_width="wrap_content"
+            android:layout_width="147dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="350dp"
-            android:layout_marginLeft="180dp"
+            android:layout_below="@+id/appName"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="175dp"
+            android:layout_marginLeft="175dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="55dp"
+            android:layout_marginRight="55dp"
+            android:backgroundTint="@color/blue"
             android:text="UPLOAD"
             android:textSize="20sp"
-            android:textStyle="italic"
-            android:backgroundTint="@color/blue"/>
+            android:textStyle="italic" />
+
         <Button
             android:id="@+id/btnHistory"
-            android:layout_width="wrap_content"
+            android:layout_width="221dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="440dp"
-            android:layout_marginLeft="70dp"
+            android:layout_below="@+id/appName"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="55dp"
+            android:layout_marginLeft="55dp"
+            android:layout_marginTop="121dp"
+            android:layout_marginEnd="55dp"
+            android:layout_marginRight="55dp"
+            android:backgroundTint="@color/Brown"
             android:text="SCORE HISTORY"
             android:textSize="20sp"
-            android:textStyle="italic"
-            android:backgroundTint="@color/Brown"/>
+            android:textStyle="italic" />
 
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
