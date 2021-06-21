@@ -30,6 +30,7 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity {
     private Button btnPlay;
     private Button btnUpload;
+    private Button btnHistory;
     private FirebaseFirestore db;
     private FirebaseStorage storage;
     private StorageReference storageReference;
@@ -137,6 +138,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, UploadRelativeActivity.class);
+                startActivity(intent);
+            }
+        });
+        btnHistory = findViewById(R.id.btnHistory);
+        btnHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ScoreHistoryActivity.class);
                 startActivity(intent);
             }
         });

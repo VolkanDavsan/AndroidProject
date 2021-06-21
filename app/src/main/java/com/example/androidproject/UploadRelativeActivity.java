@@ -114,7 +114,7 @@ public class UploadRelativeActivity extends AppCompatActivity {
 
     private void uploadImage() {
         final ProgressDialog pd = new ProgressDialog(this);
-        pd.setTitle("Image is uplaoding...");
+        pd.setTitle("Image is uploading...");
         pd.show();
 
         StorageReference imageRef = storageReference.child("images/" + relativeName.getText().toString() + "." + getFileExtension(imageUri));

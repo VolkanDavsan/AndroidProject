@@ -22,6 +22,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -33,8 +35,12 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.Serializable;
 import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 public class QuizActivity extends AppCompatActivity {
@@ -43,6 +49,7 @@ public class QuizActivity extends AppCompatActivity {
     private ImageView imageView;
     private FirebaseStorage storage;
     private StorageReference storageReference;
+    private FirebaseFirestore db;
     private ArrayList<Relative> relatives;
     int totalQuestions;
     int qCounter = 0;
@@ -64,6 +71,7 @@ public class QuizActivity extends AppCompatActivity {
         tvQuestionNo = findViewById(R.id.textQuestionNo);
         tvTimer = findViewById(R.id.textTimer);
 
+        db = FirebaseFirestore.getInstance();
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
 
@@ -210,10 +218,32 @@ public class QuizActivity extends AppCompatActivity {
             answered = false;
 
         }else{
+
             questionsList.clear();
             Intent intent = new Intent(QuizActivity.this, TotalScoreActivity.class);
             String strName = Integer.toString(score);
+            Date date =  new Date(System.currentTimeMillis());
             intent.putExtra("name", strName);
+            SimpleDateFormat formatter = new SimpleDateFormat("dd'/'MM'/'yyyy HH:mm");
+            String formatDate = formatter.format(date);
+            Map<String, Object> scoreHistory = new HashMap<>();
+            scoreHistory.put("Score", strName);
+            scoreHistory.put("Date", formatDate);
+
+            db.collection("Scores")
+                    .add(scoreHistory)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            Snackbar.make(findViewById(android.R.id.content), "Score has been saved.", Snackbar.LENGTH_LONG).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getApplicationContext(), "Score cannot be saved.", Toast.LENGTH_LONG).show();
+                        }
+                    });
             startActivity(intent);
 
         }
