@@ -155,25 +155,25 @@ public class QuizActivity extends AppCompatActivity {
             tvScore.setText("Score: " + score);
 
         }
-        btn1.setBackgroundColor(Color.RED);
-        btn2.setBackgroundColor(Color.RED);
-        btn3.setBackgroundColor(Color.RED);
-        btn4.setBackgroundColor(Color.RED);
+        btn1.setBackgroundColor(Color.parseColor("#A52A2A"));
+        btn2.setBackgroundColor(Color.parseColor("#A52A2A"));
+        btn3.setBackgroundColor(Color.parseColor("#A52A2A"));
+        btn4.setBackgroundColor(Color.parseColor("#A52A2A"));
         switch(currentQuestion.getCorrectAnsNo()){
             case 1:
-                btn1.setBackgroundColor(Color.GREEN);
+                btn1.setBackgroundColor(Color.parseColor("#008000"));
                 btn1.setTextColor(Color.BLACK);
                 break;
             case 2:
-                btn2.setBackgroundColor(Color.GREEN);
+                btn2.setBackgroundColor(Color.parseColor("#008000"));
                 btn2.setTextColor(Color.BLACK);
                 break;
             case 3:
-                btn3.setBackgroundColor(Color.GREEN);
+                btn3.setBackgroundColor(Color.parseColor("#008000"));
                 btn3.setTextColor(Color.BLACK);
                 break;
             case 4:
-                btn4.setBackgroundColor(Color.GREEN);
+                btn4.setBackgroundColor(Color.parseColor("#008000"));
                 btn4.setTextColor(Color.BLACK);
                 break;
 
@@ -229,7 +229,7 @@ public class QuizActivity extends AppCompatActivity {
             Map<String, Object> scoreHistory = new HashMap<>();
             scoreHistory.put("Score", strName);
             scoreHistory.put("Date", formatDate);
-
+            intent.putParcelableArrayListExtra("question_list", questionsList);
             db.collection("Scores")
                     .add(scoreHistory)
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
