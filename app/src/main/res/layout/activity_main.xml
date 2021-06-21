@@ -18,19 +18,19 @@
 
         <ImageView
             android:id="@+id/appPhoto"
-            android:layout_width="269dp"
-            android:layout_height="wrap_content"
+            android:layout_width="276dp"
+            android:layout_height="205dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginStart="55dp"
-            android:layout_marginLeft="55dp"
-            android:layout_marginTop="100dp"
-            android:layout_marginEnd="55dp"
-            android:layout_marginRight="55dp"
-            android:src="@drawable/rphoto"
+            android:layout_marginStart="69dp"
+            android:layout_marginLeft="69dp"
+            android:layout_marginTop="54dp"
+            android:layout_marginEnd="95dp"
+            android:layout_marginRight="95dp"
+            android:src="@drawable/family"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
