@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -29,8 +30,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import java.io.Serializable;
 import java.lang.reflect.Array;
@@ -44,7 +43,6 @@ public class QuizActivity extends AppCompatActivity {
     private ImageView imageView;
     private FirebaseStorage storage;
     private StorageReference storageReference;
-    private ImageLoader imageLoader;
     private ArrayList<Relative> relatives;
     int totalQuestions;
     int qCounter = 0;
@@ -68,8 +66,6 @@ public class QuizActivity extends AppCompatActivity {
 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
-        imageLoader = ImageLoader.getInstance();
-        imageLoader.init(ImageLoaderConfiguration.createDefault(QuizActivity.this));
 
         btn1 = findViewById(R.id.btn1);
         btn2 = findViewById(R.id.btn2);
@@ -215,7 +211,11 @@ public class QuizActivity extends AppCompatActivity {
 
         }else{
             questionsList.clear();
-            finish();
+            Intent intent = new Intent(QuizActivity.this, TotalScoreActivity.class);
+            String strName = Integer.toString(score);
+            intent.putExtra("name", strName);
+            startActivity(intent);
+
         }
     }
 

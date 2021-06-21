@@ -6,4 +6,53 @@
     android:layout_height="match_parent"
     tools:context=".TotalScoreActivity">
 
+    <RelativeLayout
+        android:layout_width="409dp"
+        android:layout_height="729dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <TextView
+            android:id="@+id/totalName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text = "Total Score: 4/5"
+            android:textSize="30sp"
+            android:textColor="@color/black"
+            android:textStyle="italic|bold"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="200dp"/>
+        <TextView
+            android:id="@+id/statusName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text = "GREAT JOB!"
+            android:textSize="30sp"
+            android:textColor="@color/green"
+            android:textStyle="italic|bold"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="300dp"/>
+        <Button
+            android:id="@+id/btnHome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="400dp"
+            android:layout_marginLeft="90dp"
+            android:text="HOME"
+            android:textSize="20sp"
+            android:textStyle="italic"
+            android:backgroundTint="@color/Brown"/>
+        <Button
+            android:id="@+id/btnTryAgain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="400dp"
+            android:layout_marginLeft="200dp"
+            android:text="TRY AGAIN"
+            android:textSize="20sp"
+            android:textStyle="italic"
+            android:backgroundTint="@color/green"/>
+    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
