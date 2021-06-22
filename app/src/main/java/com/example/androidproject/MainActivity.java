@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private StorageReference storageReference;
     private ArrayList<Relative> relatives;
     private ArrayList<QuestionModel> questionsList;
+    private String isSuccessfull;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,15 @@ public class MainActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
+        isSuccessfull = getIntent().getStringExtra("success");
+
+        if(isSuccessfull != null){
+            if(isSuccessfull.equals("true")){
+                Snackbar.make(findViewById(android.R.id.content), "Image Uploaded", Snackbar.LENGTH_LONG).show();
+            } else {
+                Snackbar.make(findViewById(android.R.id.content), "Failed to Upload the image", Snackbar.LENGTH_LONG).show();
+            }
+        }
 
         questionsList = new ArrayList<>();
         relatives = new ArrayList<>();

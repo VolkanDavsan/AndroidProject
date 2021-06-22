@@ -58,6 +58,7 @@ public class QuizActivity extends AppCompatActivity {
     CountDownTimer countDownTimer;
     private QuestionModel currentQuestion;
     private ArrayList<QuestionModel> questionsList;
+    private String isScoreSaved;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -235,15 +236,16 @@ public class QuizActivity extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
-                            Snackbar.make(findViewById(android.R.id.content), "Score has been saved.", Snackbar.LENGTH_LONG).show();
+                            isScoreSaved = "true";
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getApplicationContext(), "Score cannot be saved.", Toast.LENGTH_LONG).show();
+                            isScoreSaved = "false";
                         }
                     });
+            intent.putExtra("isScoreSaved", isScoreSaved);
             startActivity(intent);
 
         }

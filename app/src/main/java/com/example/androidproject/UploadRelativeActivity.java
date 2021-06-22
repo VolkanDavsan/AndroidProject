@@ -40,6 +40,7 @@ public class UploadRelativeActivity extends AppCompatActivity {
     private FirebaseStorage storage;
     private StorageReference storageReference;
     private FirebaseFirestore db;
+    private String isSuccessfull;
 
     private String Document_img1 = "";
 
@@ -50,6 +51,7 @@ public class UploadRelativeActivity extends AppCompatActivity {
         uploadedPhoto = (ImageView) findViewById(R.id.uploadedPhoto);
         relativeName = (EditText) findViewById(R.id.relativeName);
         btnPhotoUpload = (Button) findViewById(R.id.btnPhotoUpload);
+        isSuccessfull = "true";
 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
@@ -67,6 +69,7 @@ public class UploadRelativeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 uploadImage();
                 Intent i = new Intent(UploadRelativeActivity.this, MainActivity.class);
+                i.putExtra("success",isSuccessfull);
                 startActivity(i);
             }
         });
@@ -115,19 +118,19 @@ public class UploadRelativeActivity extends AppCompatActivity {
                 Map<String, Object> relative = new HashMap<>();
                 relative.put("RelativeName", relativeName.getText().toString());
                 relative.put("ImagePath", "images/" + relativeName.getText().toString() + "." + getFileExtension(imageUri));
-
+                isSuccessfull = "true";
                 db.collection("Relatives")
                         .add(relative)
                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                             @Override
                             public void onSuccess(DocumentReference documentReference) {
-                                Snackbar.make(findViewById(android.R.id.content), "Image Uploaded", Snackbar.LENGTH_LONG).show();
+                                isSuccessfull = "true";
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(getApplicationContext(), "Failed to Upload the image.", Toast.LENGTH_LONG).show();
+                                isSuccessfull = "false";
                             }
                         });
 
