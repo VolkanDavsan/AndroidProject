@@ -1,9 +1,11 @@
 package com.example.androidproject;
 
 import android.content.Context;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -32,6 +34,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         Score score = list.get(position);
         holder.score.setText(score.getScore());
         holder.date.setText(score.getDate());
+        holder.statusImg.setImageResource(score.getStatusImg());
+
 
     }
 
@@ -42,12 +46,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         TextView score, date;
+        ImageView statusImg;
 
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             score = itemView.findViewById(R.id.tvScore);
             date = itemView.findViewById(R.id.tvDate);
+            statusImg = itemView.findViewById(R.id.status_img);
         }
     }
 }

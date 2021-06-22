@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +26,7 @@ import java.util.Random;
 public class TotalScoreActivity extends AppCompatActivity {
     private Button btnTryAgain;
     private Button btnHome;
+    private TextView statusName;
     private TextView totalName;
     private ArrayList<Relative> relatives;
     private ArrayList<QuestionModel> questionsList;
@@ -37,6 +39,7 @@ public class TotalScoreActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_total_score);
         totalName = findViewById(R.id.totalName);
+        statusName = findViewById(R.id.statusName);
         questionsList = getIntent().getParcelableArrayListExtra("question_list");
         relatives = new ArrayList<>();
         db = FirebaseFirestore.getInstance();
@@ -47,7 +50,26 @@ public class TotalScoreActivity extends AppCompatActivity {
         if (b != null) {
             String j = (String) b.get("name");
             totalName.setText("Total Score: " + j + "/5");
+            if(Integer.parseInt(j)>3){
+                ImageView img = (ImageView) findViewById(R.id.totalScoreImg);
+                img.setImageResource(R.drawable.great);
+                statusName.setText("GREAT JOB!");
+                statusName.setTextColor(getResources().getColor(R.color.green));
+            }
+            else if(Integer.parseInt(j)>1){
+                ImageView img = (ImageView) findViewById(R.id.totalScoreImg);
+                img.setImageResource(R.drawable.okay);
+                statusName.setText("NICE TRY!");
+                statusName.setTextColor(getResources().getColor(R.color.yellow));
+            }
+            else {
+                ImageView img = (ImageView) findViewById(R.id.totalScoreImg);
+                img.setImageResource(R.drawable.tryagain);
+                statusName.setText("TRY AGAIN!");
+                statusName.setTextColor(getResources().getColor(R.color.red));
+            }
         }
+
 
         btnTryAgain = findViewById(R.id.btnTryAgain);
         btnTryAgain.setOnClickListener(new View.OnClickListener() {

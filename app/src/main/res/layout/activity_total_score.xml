@@ -23,7 +23,7 @@
             android:textColor="@color/black"
             android:textStyle="italic|bold"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="200dp"/>
+            android:layout_marginTop="125dp"/>
         <TextView
             android:id="@+id/statusName"
             android:layout_width="wrap_content"
@@ -33,12 +33,20 @@
             android:textColor="@color/green"
             android:textStyle="italic|bold"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="300dp"/>
+            android:layout_marginTop="190dp"/>
+
+        <ImageView
+            android:id="@+id/totalScoreImg"
+            android:layout_width="175dp"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/great" />
+
         <Button
             android:id="@+id/btnHome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="400dp"
+            android:layout_marginTop="480dp"
             android:layout_marginLeft="90dp"
             android:text="HOME"
             android:textSize="20sp"
@@ -48,7 +56,7 @@
             android:id="@+id/btnTryAgain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="400dp"
+            android:layout_marginTop="480dp"
             android:layout_marginLeft="200dp"
             android:text="TRY AGAIN"
             android:textSize="20sp"
